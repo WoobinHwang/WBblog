@@ -1,5 +1,5 @@
 ---
-title: "서울의 음식점 현황 분석"
+title: "마크다운 연습"
 author: "woobin"
 date: '2022-03-14'
 output: 
