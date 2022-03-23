@@ -18,7 +18,7 @@ date: '2022-03-22'
 ```python
 class Person:
 
-  # class attribute
+  # class attribute 
   country = "korean"
 
   #instance attribute
