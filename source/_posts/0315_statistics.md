@@ -1,7 +1,7 @@
 ---
 title: "분석방법"
 author: "Woobin"
-date: '2022-03-15'
+date: '2022-03-18'
 output: 
   html_document:
     keep_md: true

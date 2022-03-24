@@ -1,5 +1,5 @@
 ---
-title: "Pandas 연습"
+title: "Pandas 연습1"
 author: "woobin"
 date: '2022-03-23'
 ---
