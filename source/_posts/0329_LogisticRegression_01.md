@@ -333,7 +333,7 @@ plt.show
 
 
     
-![png](output_17_1.png)
+![png](/Images/0329_LogisticRegression_01/output_17_1.png)
     
 
 

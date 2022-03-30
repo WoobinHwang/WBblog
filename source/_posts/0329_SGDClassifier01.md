@@ -148,7 +148,7 @@ plt.show()
 
 
     
-![png](output_14_0.png)
+![png](/Images/0329_SGDClassifier01/output_14_0.png)
     
 
 
