@@ -1,3 +1,9 @@
+---
+title: "합성곱 신경망_02"
+author: "woobin"
+date: '2022-04-07'
+---
+
 # 합성곱 신경망을 사용한 이미지 분류
 
 # 패션 MNIST 데이터 불러오기
@@ -26,6 +32,17 @@ train_scaled, val_scaled, train_target, val_target = train_test_split(
 print(train_input.shape, train_scaled.shape)
 ```
 
+    Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-labels-idx1-ubyte.gz
+    32768/29515 [=================================] - 0s 0us/step
+    40960/29515 [=========================================] - 0s 0us/step
+    Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-images-idx3-ubyte.gz
+    26427392/26421880 [==============================] - 0s 0us/step
+    26435584/26421880 [==============================] - 0s 0us/step
+    Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-labels-idx1-ubyte.gz
+    16384/5148 [===============================================================================================] - 0s 0us/step
+    Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-images-idx3-ubyte.gz
+    4423680/4422102 [==============================] - 0s 0us/step
+    4431872/4422102 [==============================] - 0s 0us/step
     (60000, 28, 28) (48000, 28, 28, 1)
     
 
@@ -66,27 +83,27 @@ model.add(keras.layers.Dense(10, activation='softmax'))
 model.summary()
 ```
 
-    Model: "sequential_5"
+    Model: "sequential"
     _________________________________________________________________
      Layer (type)                Output Shape              Param #   
     =================================================================
-     conv2d_9 (Conv2D)           (None, 28, 28, 32)        320       
+     conv2d (Conv2D)             (None, 28, 28, 32)        320       
                                                                      
-     average_pooling2d_4 (Averag  (None, 9, 9, 32)         0         
+     average_pooling2d (AverageP  (None, 9, 9, 32)         0         
+     ooling2D)                                                       
+                                                                     
+     conv2d_1 (Conv2D)           (None, 9, 9, 32)          9248      
+                                                                     
+     average_pooling2d_1 (Averag  (None, 3, 3, 32)         0         
      ePooling2D)                                                     
                                                                      
-     conv2d_10 (Conv2D)          (None, 9, 9, 32)          9248      
+     flatten (Flatten)           (None, 288)               0         
                                                                      
-     average_pooling2d_5 (Averag  (None, 3, 3, 32)         0         
-     ePooling2D)                                                     
+     dense (Dense)               (None, 100)               28900     
                                                                      
-     flatten_4 (Flatten)         (None, 288)               0         
+     dropout (Dropout)           (None, 100)               0         
                                                                      
-     dense_8 (Dense)             (None, 100)               28900     
-                                                                     
-     dropout_4 (Dropout)         (None, 100)               0         
-                                                                     
-     dense_9 (Dense)             (None, 10)                1010      
+     dense_1 (Dense)             (None, 10)                1010      
                                                                      
     =================================================================
     Total params: 39,478
@@ -127,27 +144,27 @@ model.add(keras.layers.Dense(10, activation='softmax'))
 model.summary()
 ```
 
-    Model: "sequential_6"
+    Model: "sequential_1"
     _________________________________________________________________
      Layer (type)                Output Shape              Param #   
     =================================================================
-     conv2d_11 (Conv2D)          (None, 28, 28, 32)        320       
+     conv2d_2 (Conv2D)           (None, 28, 28, 32)        320       
                                                                      
-     max_pooling2d_4 (MaxPooling  (None, 14, 14, 32)       0         
+     max_pooling2d (MaxPooling2D  (None, 14, 14, 32)       0         
+     )                                                               
+                                                                     
+     conv2d_3 (Conv2D)           (None, 14, 14, 64)        18496     
+                                                                     
+     max_pooling2d_1 (MaxPooling  (None, 7, 7, 64)         0         
      2D)                                                             
                                                                      
-     conv2d_12 (Conv2D)          (None, 14, 14, 64)        18496     
+     flatten_1 (Flatten)         (None, 3136)              0         
                                                                      
-     max_pooling2d_5 (MaxPooling  (None, 7, 7, 64)         0         
-     2D)                                                             
+     dense_2 (Dense)             (None, 100)               313700    
                                                                      
-     flatten_5 (Flatten)         (None, 3136)              0         
+     dropout_1 (Dropout)         (None, 100)               0         
                                                                      
-     dense_10 (Dense)            (None, 100)               313700    
-                                                                     
-     dropout_5 (Dropout)         (None, 100)               0         
-                                                                     
-     dense_11 (Dense)            (None, 10)                1010      
+     dense_3 (Dense)             (None, 10)                1010      
                                                                      
     =================================================================
     Total params: 333,526
@@ -168,7 +185,7 @@ keras.utils.plot_model(model)
 
 
     
-![png](output_9_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_9_0.png)
     
 
 
@@ -186,7 +203,7 @@ keras.utils.plot_model(model, show_shapes=True,
 
 
     
-![png](output_10_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_10_0.png)
     
 
 
@@ -202,7 +219,7 @@ keras.utils.plot_model(model, show_shapes=True)
 
 
     
-![png](output_12_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_12_0.png)
     
 
 
@@ -230,6 +247,22 @@ history = model.fit(train_scaled, train_target, epochs=10,
                     callbacks=[checkpoint_cb, early_stopping_cb])
 ```
 
+    Epoch 1/10
+    1500/1500 [==============================] - 22s 7ms/step - loss: 0.5226 - accuracy: 0.8148 - val_loss: 0.3283 - val_accuracy: 0.8823
+    Epoch 2/10
+    1500/1500 [==============================] - 12s 8ms/step - loss: 0.3447 - accuracy: 0.8770 - val_loss: 0.2821 - val_accuracy: 0.8950
+    Epoch 3/10
+    1500/1500 [==============================] - 11s 7ms/step - loss: 0.2924 - accuracy: 0.8943 - val_loss: 0.2594 - val_accuracy: 0.8985
+    Epoch 4/10
+    1500/1500 [==============================] - 13s 8ms/step - loss: 0.2618 - accuracy: 0.9046 - val_loss: 0.2387 - val_accuracy: 0.9109
+    Epoch 5/10
+    1500/1500 [==============================] - 12s 8ms/step - loss: 0.2392 - accuracy: 0.9132 - val_loss: 0.2278 - val_accuracy: 0.9163
+    Epoch 6/10
+    1500/1500 [==============================] - 10s 7ms/step - loss: 0.2190 - accuracy: 0.9192 - val_loss: 0.2297 - val_accuracy: 0.9172
+    Epoch 7/10
+    1500/1500 [==============================] - 10s 7ms/step - loss: 0.2006 - accuracy: 0.9255 - val_loss: 0.2286 - val_accuracy: 0.9179
+    
+
 
 ```python
 # import tensorflow as tf
@@ -247,105 +280,24 @@ history = model.fit(train_scaled, train_target, epochs=10,
 #                       callbacks=[checkpoint_cb, early_stopping_cb])
 ```
 
-    Epoch 1/10
-    1500/1500 [==============================] - 7s 4ms/step - loss: 0.5228 - accuracy: 0.8134 - val_loss: 0.3351 - val_accuracy: 0.8783
-    Epoch 2/10
-    1500/1500 [==============================] - 5s 3ms/step - loss: 0.3461 - accuracy: 0.8764 - val_loss: 0.2777 - val_accuracy: 0.8954
-    Epoch 3/10
-    1500/1500 [==============================] - 5s 3ms/step - loss: 0.2951 - accuracy: 0.8924 - val_loss: 0.2575 - val_accuracy: 0.9026
-    Epoch 4/10
-    1500/1500 [==============================] - 5s 4ms/step - loss: 0.2621 - accuracy: 0.9051 - val_loss: 0.2330 - val_accuracy: 0.9120
-    Epoch 5/10
-    1500/1500 [==============================] - 6s 4ms/step - loss: 0.2377 - accuracy: 0.9129 - val_loss: 0.2234 - val_accuracy: 0.9152
-    Epoch 6/10
-    1500/1500 [==============================] - 6s 4ms/step - loss: 0.2186 - accuracy: 0.9200 - val_loss: 0.2219 - val_accuracy: 0.9162
-    Epoch 7/10
-    1500/1500 [==============================] - 6s 4ms/step - loss: 0.2023 - accuracy: 0.9264 - val_loss: 0.2159 - val_accuracy: 0.9214
-    Epoch 8/10
-    1500/1500 [==============================] - 6s 4ms/step - loss: 0.1872 - accuracy: 0.9312 - val_loss: 0.2125 - val_accuracy: 0.9229
-    Epoch 9/10
-    1500/1500 [==============================] - 6s 4ms/step - loss: 0.1722 - accuracy: 0.9358 - val_loss: 0.2129 - val_accuracy: 0.9258
-    Epoch 10/10
-    1500/1500 [==============================] - 6s 4ms/step - loss: 0.1611 - accuracy: 0.9376 - val_loss: 0.2283 - val_accuracy: 0.9199
-    
-
 - 모델 학습 곡선 그리기
 
 
 ```python
-# 연습 코드: plotly로 그려보기
-import plotly.express as px
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-import matplotlib.pyplot as plt
+# # 연습 코드: plotly로 그려보기
+# # 아래와 비슷한 결과를 얻었지만 블로그에 올리기 위해 주석 처리
+# import plotly.express as px
+# from plotly.subplots import make_subplots
+# import plotly.graph_objects as go
+# import matplotlib.pyplot as plt
 
-fig = make_subplots()
+# fig = make_subplots()
 
-fig.add_trace(go.Bar(y= history.history['loss']))
-fig.add_trace(go.Scatter(y= history.history['val_loss']))
+# fig.add_trace(go.Bar(y= history.history['loss']))
+# fig.add_trace(go.Scatter(y= history.history['val_loss']))
 
-fig.show()
+# fig.show()
 ```
-
-
-[//]: # (<html>)
-
-[//]: # (<head><meta charset="utf-8" /></head>)
-
-[//]: # (<body>)
-
-[//]: # (    <div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if &#40;window.MathJax&#41; {MathJax.Hub.Config&#40;{SVG: {font: "STIX-Web"}}&#41;;}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>)
-
-[//]: # (        <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>                <div id="c8924ee6-55c6-46f0-8086-9059699fa8f5" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if &#40;document.getElementById&#40;"c8924ee6-55c6-46f0-8086-9059699fa8f5"&#41;&#41; {                    Plotly.newPlot&#40;                        "c8924ee6-55c6-46f0-8086-9059699fa8f5",                        [{"y":[0.5227905511856079,0.34605586528778076,0.29508572816848755,0.262106716632843,0.2377263754606247,0.21863968670368195,0.20233646035194397,0.18718752264976501,0.1721685230731964,0.1610814332962036],"type":"bar"},{"y":[0.3351101279258728,0.27766725420951843,0.25754213333129883,0.23295046389102936,0.22336450219154358,0.22187326848506927,0.21594305336475372,0.21249684691429138,0.21287128329277039,0.22832433879375458],"type":"scatter"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0]},"yaxis":{"anchor":"x","domain":[0.0,1.0]}},                        {"responsive": true}                    &#41;.then&#40;function&#40;&#41;{)
-
-[//]: # ()
-[//]: # (var gd = document.getElementById&#40;'c8924ee6-55c6-46f0-8086-9059699fa8f5'&#41;;)
-
-[//]: # (var x = new MutationObserver&#40;function &#40;mutations, observer&#41; {{)
-
-[//]: # (        var display = window.getComputedStyle&#40;gd&#41;.display;)
-
-[//]: # (        if &#40;!display || display === 'none'&#41; {{)
-
-[//]: # (            console.log&#40;[gd, 'removed!']&#41;;)
-
-[//]: # (            Plotly.purge&#40;gd&#41;;)
-
-[//]: # (            observer.disconnect&#40;&#41;;)
-
-[//]: # (        }})
-
-[//]: # (}}&#41;;)
-
-[//]: # ()
-[//]: # (// Listen for the removal of the full notebook cells)
-
-[//]: # (var notebookContainer = gd.closest&#40;'#notebook-container'&#41;;)
-
-[//]: # (if &#40;notebookContainer&#41; {{)
-
-[//]: # (    x.observe&#40;notebookContainer, {childList: true}&#41;;)
-
-[//]: # (}})
-
-[//]: # ()
-[//]: # (// Listen for the clearing of the current output cell)
-
-[//]: # (var outputEl = gd.closest&#40;'.output'&#41;;)
-
-[//]: # (if &#40;outputEl&#41; {{)
-
-[//]: # (    x.observe&#40;outputEl, {childList: true}&#41;;)
-
-[//]: # (}})
-
-[//]: # ()
-[//]: # (                        }&#41;                };                            </script>        </div>)
-
-[//]: # (</body>)
-
-[//]: # (</html>)
-
 
 
 ```python
@@ -359,7 +311,7 @@ plt.show()
 
 
     
-![png](output_19_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_19_0.png)
     
 
 
@@ -394,14 +346,14 @@ model.layers  # 리스트 형태로 저장되어 있음
 
 
 
-    [<keras.layers.convolutional.Conv2D at 0x7f72cec86650>,
-     <keras.layers.pooling.MaxPooling2D at 0x7f72cec86b90>,
-     <keras.layers.convolutional.Conv2D at 0x7f72cec7ded0>,
-     <keras.layers.pooling.MaxPooling2D at 0x7f7394985a90>,
-     <keras.layers.core.flatten.Flatten at 0x7f72cec8d250>,
-     <keras.layers.core.dense.Dense at 0x7f72cec86a10>,
-     <keras.layers.core.dropout.Dropout at 0x7f73949e5cd0>,
-     <keras.layers.core.dense.Dense at 0x7f73949cff50>]
+    [<keras.layers.convolutional.Conv2D at 0x7fc7d81a7790>,
+     <keras.layers.pooling.MaxPooling2D at 0x7fc8e00bfc10>,
+     <keras.layers.convolutional.Conv2D at 0x7fc7f2f88490>,
+     <keras.layers.pooling.MaxPooling2D at 0x7fc7d710d5d0>,
+     <keras.layers.core.flatten.Flatten at 0x7fc8e023bb10>,
+     <keras.layers.core.dense.Dense at 0x7fc7f3fb5350>,
+     <keras.layers.core.dropout.Dropout at 0x7fc86a7a7050>,
+     <keras.layers.core.dense.Dense at 0x7fc86a793750>]
 
 
 
@@ -429,7 +381,7 @@ conv_weights = conv.weights[0].numpy()
 print(conv_weights.mean(), conv_weights.std())  # 평균(mean), 표준편차(std)
 ```
 
-    -0.054838914 0.28367323
+    -0.025856383 0.21591602
     
 
 
@@ -442,7 +394,7 @@ plt.show()
 
 
     
-![png](output_29_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_29_0.png)
     
 
 
@@ -462,7 +414,7 @@ plt.show()
 
 
     
-![png](output_31_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_31_0.png)
     
 
 
@@ -491,7 +443,7 @@ no_training_weights = no_training_conv.weights[0].numpy()
 print(no_training_weights.mean(), no_training_weights.std())
 ```
 
-    0.0015572025 0.082305014
+    0.0065383185 0.081879705
     
 
 
@@ -504,7 +456,7 @@ plt.show()
 
 
     
-![png](output_36_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_36_0.png)
     
 
 
@@ -522,7 +474,7 @@ plt.show()
 
 
     
-![png](output_37_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_37_0.png)
     
 
 
@@ -544,12 +496,12 @@ plt.imshow(train_input[0], cmap='gray_r')
 plt.show()
 ```
 
-    KerasTensor(type_spec=TensorSpec(shape=(None, 28, 28, 1), dtype=tf.float32, name='conv2d_11_input'), name='conv2d_11_input', description="created by layer 'conv2d_11_input'")
+    KerasTensor(type_spec=TensorSpec(shape=(None, 28, 28, 1), dtype=tf.float32, name='conv2d_2_input'), name='conv2d_2_input', description="created by layer 'conv2d_2_input'")
     
 
 
     
-![png](output_41_1.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_41_1.png)
     
 
 
@@ -579,7 +531,7 @@ plt.show()
 
 
     
-![png](output_44_0.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_44_0.png)
     
 
 
@@ -604,7 +556,7 @@ plt.show()
 
 
     
-![png](output_45_1.png)
+![png](/Images/0407_Convolution_Neural_Network_02/output_45_1.png)
     
 
 
@@ -625,8 +577,3 @@ plt.show()
 
 - **matplotlib** 패키지
   - **bar()**: 막대그래프를 출력
-
-
-```python
-
-```
