@@ -1,3 +1,9 @@
+---
+title: "라이브러리 / 가상 환경 / pip, pip3 기능"
+author: "woobin"
+date: '2022-04-17'
+---
+
 # 라이브러리 / 가상 환경 / pip, pip3 기능
 
 ### 라이브러리 (Library):
