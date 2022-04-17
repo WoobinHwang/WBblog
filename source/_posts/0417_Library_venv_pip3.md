@@ -10,6 +10,7 @@
 - WSL(Windows Subsystem for Linux)에서 가상 환경을 만들고 적용 (예시)
 
 ```bash
+$ sudo pip3 install virtualenv # 패키지가 없다면 설치
 $ virtualenv venv
 $ source venv/bin/activate
 ```
