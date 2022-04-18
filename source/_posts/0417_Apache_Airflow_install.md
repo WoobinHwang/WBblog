@@ -87,8 +87,7 @@ $ airflow webserver -p 8081
 
 ![Untitled](/Images/0417_Apache_Airflow_install/Untitled%206.png)
 
-- example 데이터들 삭제
-airflow.cfg 파일에 들어가서 load_examples 부분이 True이면 False로 바꾸고 저장.
+- airflow.cfg 파일에 들어가서 load_examples 부분이 True이면 False로 바꾸고 저장.
 
 ![Untitled](/Images/0417_Apache_Airflow_install/Untitled%207.png)
 
